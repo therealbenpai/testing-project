@@ -2,7 +2,7 @@
 import Player from "./components/player";
 import Header from "./components/header";
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default function Page() {
     return (
@@ -16,6 +16,8 @@ export default function Page() {
                 favicon="https://cdn.thefemdevs.com/assets/images/grav/329f481757ca49ce98d31d9041285a11"
             />
             <body>
+                <div id="bg" className="x-0 y-0 flex">
+                </div>
                 <div className="flex items-center justify-center min-h-screen">
                     <Player />
                 </div>

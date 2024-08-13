@@ -26,8 +26,21 @@
 }
 
 body {
-    background-image: conic-gradient(in hsl longer hue, red, yellow, lime, aqua, blue, magenta, red);
+    overflow: hidden;
+}
+
+#bg {
+    position: absolute;
+    margin: -1000px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: conic-gradient(in hsl longer hue, red, yellow, lime, aqua, blue, magenta, red);
     animation: spinbg 60s linear infinite;
+    transform: scale(2);
+    overflow: clip;
     backdrop-filter: blur(50px);
 }
 
@@ -52,10 +65,10 @@ body {
 
 @keyframes spinbg {
     from {
-        background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+        transform: rotate(0deg);
     }
 
     to {
-        background: conic-gradient(from 359deg, red, yellow, lime, aqua, blue, magenta, red);
+        transform: rotate(360deg);
     }
 }

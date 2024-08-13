@@ -102,7 +102,7 @@ export default function Player() {
                         {playing.track.title.replace(NFR, '') || 'Nothing'}
                     </h2>
                     <p
-                        className="text-2xl font-semibold text-slate-700"
+                        className="text-2xl font-semibold text-slate-200"
                         id="artist-name"
                     >
                         {LF.format(playing.artists.map(a => a.name || 'None')).replace(NFR, '') || 'No One'}
