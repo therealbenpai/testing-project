@@ -3,7 +3,20 @@
 
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
+import { styled } from '@mui/material/styles';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 14,
+    borderRadius: 7,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 7,
+        backgroundColor: theme.palette.mode === 'light' ? '#1aff90' : '#30e88f',
+    },
+}));
 
 import './assets/css/player.css';
 
@@ -67,7 +80,7 @@ export default function Player() {
 
     return (
         <div
-            className="bg-gray-900 rounded-lg shadow-lg p-8 w-full max-w-xl flex now-playing gap-8 md:max-w-6xl"
+            className="bg-[#00000070] backdrop-blur-xl rounded-[2rem] shadow-lg p-8 w-full max-w-xl now-playing flex gap-8 md:max-w-6xl"
         >
             <style>
                 {`.album-cover::before {background-image:url(${playing.album.image || 'https://via.placeholder.com/300'});}`}
@@ -80,29 +93,33 @@ export default function Player() {
                     alt={playing.album.title.replace(NFR, '') || 'None'}
                 />
             </div>
-            <div className="song-info p-4 self-center gap-4">
-                <div className="text-center md:text-left gap-2">
+            <div className="song-info p-4 self-center gap-2 grid">
+                <div className="text-center md:text-left gap-2 grid">
                     <h2
-                        className="text-gray-300 text-2xl font-semibold"
+                        className="text-gray-300 text-3xl font-semibold"
                         id="song-title"
                     >
                         {playing.track.title.replace(NFR, '') || 'Nothing'}
                     </h2>
                     <p
-                        className="text-gray-400 text-lg"
+                        className="text-2xl font-semibold text-slate-700"
                         id="artist-name"
                     >
                         {LF.format(playing.artists.map(a => a.name || 'None')).replace(NFR, '') || 'No One'}
                     </p>
                 </div>
-                <div className="my-4 gap-4">
-                    <Box sx={{ width: '100%' }}>
-                        <LinearProgress variant="determinate" value={playing.meta.progress.percentage} />
+                <div className="my-3 grid">
+                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ minWidth: 35 }}>
+                            <Timestamp time={playing.meta.progress.current} />
+                        </Box>
+                        <Box sx={{ width: '100%', mx: 2 }}>
+                            <BorderLinearProgress variant="determinate" value={playing.meta.progress.percentage} />
+                        </Box>
+                        <Box sx={{ minWidth: 35 }}>
+                            <Timestamp time={playing.meta.progress.end - playing.meta.progress.start} />
+                        </Box>
                     </Box>
-                    <div className="flex justify-between text-lg text-gray-400 mt-1">
-                        <Timestamp time={playing.meta.progress.current} />
-                        <Timestamp time={playing.meta.progress.end - playing.meta.progress.start} />
-                    </div>
                 </div>
             </div>
         </div>
